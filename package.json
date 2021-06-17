@@ -1,0 +1,23 @@
+{
+  "name": "node_practice",
+  "version": "1.0.0",
+  "description": "Node.js program",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prateek1008/node_practice.git"
+  },
+  "author": "Prateek Srivastava",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prateek1008/node_practice/issues"
+  },
+  "homepage": "https://github.com/prateek1008/node_practice#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
