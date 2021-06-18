@@ -1,50 +1,51 @@
 /**
-    * * It is a core module which needs not to be installed externally. Shipped with node.
-*/
-const http = require("http");
+ * * built in module to deal with paths
+ */
+const path = require("path");
 
 /**
- * * It is a local import of routes file which have all the logic.
- * * That logic can be written here but to have leaner code we did this.
- * * Including .js extension while importing does not harm but is is already done by node. SO, we can avoid it. 
+ * * express and body-parser is a third party package
  */
-const routes = require("./routes")
+
+const express = require("express");
+const bodyParser = require("body-parser")
 
 /**
- * * There are certain ways to make functions in JS.
- * * 1. Explicit named function using keyword function
- * * 2. Anonymous function using keyword function
- * * 3. Anonymous function using arrow functions
+ * * we used express router to divide differnt routes into different files
  */
 
-// 1. Way 1
-// function rqListener(req,res) {}
-// http.createServer(rqListener)
+const admin = require("./routes/admin");
+const shop = require("./routes/shop");
 
-// 2. Way 
-// http.createServer(function(req,res) {})
-
-// Way 3
-// const server = http.createServer((req, res) => {
-//   console.log(req.url, req.method, req.headers);
-/**
- * * For hard exiting of event loops, this can be called.
- * * It is not a good practive to vcall it. 
- * * Node eventually called it after completion of events.
- */
-//   process.exit();
-
-// })
-
-console.log(routes.someText)
+const app = express();
 
 /**
- * * Creation of server and passing exported routes handler to move ahead.
+ * * use function is for all types of request(POST,GET,etc) and it does not matches full path. Hence, Generic paths should be kept at end.
+ * * /admin in use is to give nested routing. The paths inside that routes will start from /admin now.
+ * * chanining of different methods can be done on response. Status, headers,etc can be set like this
+ * * send should be the last method in the chain.
+ * * send will automatically add headers(like text/html, etc)
+ * * next function is used to go to the next middleware function
+ * * express.static function is used to serve files like css or js, or images from browser. We can have multiple static folders.
+ * * path.join will take all the arguments and make a path depending on different operating systems.
+ * * __dirname stores absolute path of the location it is used 
  */
-const server = http.createServer(routes.handler)
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(path.join(__dirname,'public')));
+
+app.use('/admin',admin.router);
+app.use(shop.router);
+
+app.use((req,res,next) => {
+    // res.status(404).send(`
+    //     <h3>
+    //         Page Not Found    
+    //     </h3>
+    // `)
+    res.status(404).sendFile(path.join(__dirname,'views','page-not-found.html'));
+})
 
 /**
- * * This will keep the server listen to the actions.
- * * 3000 is the port number we have given. It can be some different or 80 in production.
+ * * listen on app merges create server and listen command in a single line.
  */
-server.listen(3000);
+app.listen(3000);

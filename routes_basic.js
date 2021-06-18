@@ -15,7 +15,7 @@ const requestHandler = (req,res) => {
      * * response can be send before res.end
      * * action in form redirects the page on submit event of button.
      * * method on form tells what kind of request is generated. It can be POST,GET,etc.
-     * * It will take tahe data with field name as name of input, "message" in below case
+     * * It will take the data with field name as name of input, "message" in below case
      * * Return res.end otherwise if will flow for the next lines and there might be some sending of response which can cause errors.
      */
 
@@ -48,7 +48,7 @@ const requestHandler = (req,res) => {
 
         /**
          * * writeFileSync works on file synchronously and it stopped the process. It should be avoided.
-         * * writeFile brings that is worker pool so that it can be run on different threads. It also has anonymous function as third argument to proceed with further actions and error handling.
+         * * writeFile brings that to worker pool so that it can be run on different threads. It also has anonymous function as third argument to proceed with further actions and error handling.
          */
 
       //   fs.writeFileSync("message.txt", message); //Block the code path
