@@ -12,6 +12,7 @@ const router = express.Router();
  * * It will look into the views folder or the folder we have set in app.js.
  * * So, no paths needs be to defined.
  * * Handlebar files don't do javascripts operations luke greater than or equal to. We have to pass boolean types in those files. Example : hasProducts
+ * * layout : false can be used to not us layouts in handlebars
  */
 router.get("/", (req, res, next) => {
   // res.send("<h3>Hello from node</h3>");
@@ -26,7 +27,7 @@ router.get("/", (req, res, next) => {
     path: "/",
     hasProducts: products.length > 0,
     productCSS: true,
-    activeShop: true,
+    activeShop: true
   });
 });
 

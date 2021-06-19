@@ -22,20 +22,22 @@ const shop = require("./routes/shop");
 const app = express();
 
 /**
- * * Install pug using npm. It is a templating engine to render dynamic html content.
- * * We need to set view engine globally using set function of express. It will identify pug as templating engine
+ * * Install pug, express-handlebars and ejs using npm. It is a templating engine to render dynamic html content.
+ * * We need to set view engine globally using set function of express. It will identify pug, handlebars or ejs as templating engine
  * * By default, it search in views folder which we are already using. In case of any other folder, we need to specify views folder. Right now, it can be neglected.
  * * app.engine registers this as the templating engine. First argument can be anything but it will be the extension of handlebars files in views folder.
- * * expressHbs should be executer here and not to be passed as reference
+ * * expressHbs should be executed here and not to be passed as reference
  * * we need to explicitly define layouts settings as arguments of expressHbs.
  * * views/layout/ is the default location and need not to be defined.
  * * extName for layouts should be defined here otherwise it will search for .handlebar extension
+ * * pug and ejs are already known engines and therefore no engines needs to br created for that.
  */
 
-app.engine('hbs',expressHbs({layoutsDir: 'views/layout/',defaultLayout: 'main-layout',extname: 'hbs'}));
-app.set('view engine', 'hbs');
+// app.engine('hbs',expressHbs({layoutsDir: 'views/layout/',defaultLayout: 'main-layout',extname: 'hbs'}));
+// app.set('view engine', 'hbs');
 
 // app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 /**
@@ -49,6 +51,7 @@ app.set('views', 'views');
  * * path.join will take all the arguments and make a path depending on different operating systems.
  * * __dirname stores absolute path of the location it is used 
  * * we can pass dynamic data like pageTitle as an object to pug/handlebar file
+ * * object variable path is created for ejs otherrwise it will throw an javascript error of unknown variable
  */
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname,'public')));
@@ -63,7 +66,7 @@ app.use((req,res,next) => {
     //     </h3>
     // `)
     // res.status(404).sendFile(path.join(__dirname,'views','page-not-found.html'));
-    res.status(404).render('page-not-found', {pageTitle: 'Page Not Found'});
+    res.status(404).render('page-not-found', {pageTitle: 'Page Not Found', path: ''});
 })
 
 /**
