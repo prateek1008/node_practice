@@ -1,0 +1,15 @@
+//-
+    extends keyword is used to render the common template on this page
+    block is used with the tagname to specify where we want to add out templates to the common layout
+extends layout/main-layout.pug
+
+block styles 
+    link(rel="stylesheet", href="/css/product.css")
+
+block content 
+    main
+        form.product-form(action="/admin/product", method="POST")
+            .form-control
+                label(for="title") Title 
+                input(type="text", name="title", id="title")
+            button(type="submit") Add Product
