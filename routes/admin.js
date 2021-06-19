@@ -18,18 +18,24 @@ const products = [];
  * * sendFile takes the path of out html file and send content as response.
  * * .. indicates to go up one level.
  */
-router.get('/add-product',(req,res,next) => {
-    // res.send(`
-    //     <form action="/admin/product" method="POST">
-    //         <input type= "text" name="title">
-    //         <button type="submit">
-    //             Submit
-    //         </button>
-    //     </form>
-    // `)
-    // res.sendFile(path.join(__dirname, '..', 'views', 'add-product.html'));
-    // res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
-    res.render("add-product", {pageTitle: 'Add Product', path: '/admin/add-product'});
+router.get("/add-product", (req, res, next) => {
+  // res.send(`
+  //     <form action="/admin/product" method="POST">
+  //         <input type= "text" name="title">
+  //         <button type="submit">
+  //             Submit
+  //         </button>
+  //     </form>
+  // `)
+  // res.sendFile(path.join(__dirname, '..', 'views', 'add-product.html'));
+  // res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
+  res.render("add-product", {
+    pageTitle: "Add Product",
+    path: "/admin/add-product",
+    formsCSS: true,
+    productCSS: true,
+    activeAddProduct: true,
+  });
 });
 
 /**
@@ -37,12 +43,12 @@ router.get('/add-product',(req,res,next) => {
  * * Only can be used where we want to update global data. Not for personal data.
  * * Otherwise, name of user A will reflect in name of user B. it works on references.
  */
-router.post('/product', (req,res,next) => {
-    products.push({
-        title: req.body.title
-    });
-    res.redirect('/')
-})
+router.post("/product", (req, res, next) => {
+  products.push({
+    title: req.body.title,
+  });
+  res.redirect("/");
+});
 
 exports.router = router;
 exports.products = products;
