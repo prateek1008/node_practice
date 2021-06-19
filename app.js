@@ -16,8 +16,9 @@ const bodyParser = require("body-parser");
  * * we used express router to divide differnt routes into different files
  */
 
-const admin = require("./routes/admin");
-const shop = require("./routes/shop");
+const adminRoutes = require("./routes/admin");
+const shopRoutes = require("./routes/shop");
+const errorController = require("./controllers/error");
 
 const app = express();
 
@@ -52,24 +53,26 @@ app.set("view engine", "ejs");
  * * __dirname stores absolute path of the location it is used
  * * we can pass dynamic data like pageTitle as an object to pug/handlebar/ejs file
  * * object variable path is created for ejs otherrwise it will throw an javascript error of unknown variable
+ * * controllers are places to have all the logic to connect with model and views
  */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/admin", admin.router);
-app.use(shop.router);
+app.use("/admin", adminRoutes);
+app.use(shopRoutes);
 
-app.use((req, res, next) => {
-  // res.status(404).send(`
-  //     <h3>
-  //         Page Not Found
-  //     </h3>
-  // `)
-  // res.status(404).sendFile(path.join(__dirname,'views','page-not-found.html'));
-  res
-    .status(404)
-    .render("page-not-found", { pageTitle: "Page Not Found", path: "" });
-});
+// app.use((req, res, next) => {
+// res.status(404).send(`
+//     <h3>
+//         Page Not Found
+//     </h3>
+// `)
+// res.status(404).sendFile(path.join(__dirname,'views','page-not-found.html'));
+//   res
+//     .status(404)
+//     .render("page-not-found", { pageTitle: "Page Not Found", path: "" });
+// });
+app.use(errorController.get404);
 
 /**
  * * listen on app merges create server and listen command in a single line.

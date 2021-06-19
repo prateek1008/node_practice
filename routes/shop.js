@@ -3,7 +3,8 @@
 const express = require("express");
 
 // const rootDir = require("../util/path");
-const admin = require("./admin");
+// const admin = require("./admin");
+const productsController = require("../controllers/products");
 
 const router = express.Router();
 
@@ -14,26 +15,28 @@ const router = express.Router();
  * * Handlebar files don't do javascripts operations like greater than or equal to. We have to pass boolean types in those files. Example : hasProducts
  * * layout : false can be used to not use layouts in handlebars
  */
-router.get("/", (req, res, next) => {
-  // res.send("<h3>Hello from node</h3>");
-  // res.sendFile(path.join(__dirname, '..', 'views','shop.html'))
-  // console.log(admin.products);
-  // res.sendFile(path.join(rootDir, 'views','shop.html'))
-  const products = admin.products;
-  // res.render('shop',{prods: products, pageTitle: 'Shop', path: '/'});
-  // res.render("shop", {
-  //   prods: products,
-  //   pageTitle: "Shop",
-  //   path: "/",
-  //   hasProducts: products.length > 0,
-  //   productCSS: true,
-  //   activeShop: true,
-  // });
-  res.render("shop", {
-    prods: products,
-    pageTitle: "Shop",
-    path: "/",
-  });
-});
+// router.get("/", (req, res, next) => {
+// res.send("<h3>Hello from node</h3>");
+// res.sendFile(path.join(__dirname, '..', 'views','shop.html'))
+// console.log(admin.products);
+// res.sendFile(path.join(rootDir, 'views','shop.html'))
+//   const products = admin.products;
+// res.render('shop',{prods: products, pageTitle: 'Shop', path: '/'});
+// res.render("shop", {
+//   prods: products,
+//   pageTitle: "Shop",
+//   path: "/",
+//   hasProducts: products.length > 0,
+//   productCSS: true,
+//   activeShop: true,
+// });
+//   res.render("shop", {
+//     prods: products,
+//     pageTitle: "Shop",
+//     path: "/",
+//   });
+// });
 
-exports.router = router;
+router.get("/", productsController.getProducts);
+
+module.exports = router;
