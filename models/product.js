@@ -4,7 +4,7 @@ const path = require("path");
 const rootDir = require("../util/path");
 
 // const products = [];
-const p = path.join(rootDir, 'data', 'products.json');
+const p = path.join(rootDir, "data", "products.json");
 
 /**
  * * this is a helper function which can be used by different methods for same operation
@@ -15,44 +15,47 @@ const p = path.join(rootDir, 'data', 'products.json');
  * * arrow function must be needed to get the instance of object using this
  */
 const getProductsFromFile = (cb) => {
-    fs.readFile(p, (err,fileContent) => {
-        if(err) {
-            return cb([])
-            // return [];
-        }
-        // return JSON.parse(fileContent);
-        cb(JSON.parse(fileContent));
-    })
-}
+  fs.readFile(p, (err, fileContent) => {
+    if (err) {
+      return cb([]);
+      // return [];
+    }
+    // return JSON.parse(fileContent);
+    cb(JSON.parse(fileContent));
+  });
+};
 
 module.exports = class Product {
-    constructor(t) {
-        this.title = t;
-    }
+  constructor(title, imageUrl, description, price) {
+    this.title = title;
+    this.imageUrl = imageUrl;
+    this.description = description;
+    this.price = price;
+  }
 
-    save() {
-        // products.push(this)
-        // const p = path.join(rootDir, 'data', 'products.json');
-        // fs.readFile(p, (err,fileContent) => {
-        //     let products = [];
-        //     if(!err) {
-        //         products = JSON.parse(fileContent);
-        //     }
-        //     products.push(this)
-        //     fs.writeFile(p, JSON.stringify(products), (err) => {
-        //         console.log(err);
-        //     })
-        // })
-        getProductsFromFile(products => {
-            products.push(this)
-            fs.writeFile(p, JSON.stringify(products), (err) => {
-                console.log(err);
-            })
-        });
-    }
+  save() {
+    // products.push(this)
+    // const p = path.join(rootDir, 'data', 'products.json');
+    // fs.readFile(p, (err,fileContent) => {
+    //     let products = [];
+    //     if(!err) {
+    //         products = JSON.parse(fileContent);
+    //     }
+    //     products.push(this)
+    //     fs.writeFile(p, JSON.stringify(products), (err) => {
+    //         console.log(err);
+    //     })
+    // })
+    getProductsFromFile((products) => {
+      products.push(this);
+      fs.writeFile(p, JSON.stringify(products), (err) => {
+        console.log(err);
+      });
+    });
+  }
 
-    static fetchAll(cb) {
-        // return products;
-        getProductsFromFile(cb);
-    }
-}
+  static fetchAll(cb) {
+    // return products;
+    getProductsFromFile(cb);
+  }
+};

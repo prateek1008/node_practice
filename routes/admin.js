@@ -3,7 +3,7 @@
 const express = require("express");
 
 // const rootDir = require("../util/path");
-const productsController = require("../controllers/products");
+const adminController = require("../controllers/admin");
 
 /**
  * * Router is a function of express which have almost similar capabilities of routing as express
@@ -40,7 +40,7 @@ const router = express.Router();
 //     path: "/admin/add-product",
 //   });
 // });
-router.get("/add-product", productsController.getAddProduct);
+router.get("/add-product", adminController.getAddProduct);
 
 /**
  * * This products array can be imported in any other file. But it will have the same copy across all users.
@@ -49,6 +49,8 @@ router.get("/add-product", productsController.getAddProduct);
  * * request body comes from body-parser from app.js
  */
 
-router.post("/product", productsController.postAddProduct);
+router.get("/products", adminController.getProducts);
+
+router.post("/product", adminController.postAddProduct);
 
 module.exports = router;
